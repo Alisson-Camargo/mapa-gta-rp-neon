@@ -29,7 +29,7 @@
   });
 
   // Create tile layer
-  var tileLayer = L.tileLayer('./tiles/{z}/{x}/{y}.png', {
+  var tileLayer = L.tileLayer('tiles/{z}/{x}_{y}.jpg', {
     tileSize: 256,
     noWrap: true,
     bounds: [[0,0], [imgHeight, imgWidth]]
