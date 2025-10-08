@@ -18,23 +18,19 @@
 <div id="map"></div>
 
 <script>
-  // Cria o mapa
-  const map = L.map('map', {
-      // O CRS.Simple não é ideal para tiles XYZ, mas vamos começar assim
-      crs: L.CRS.Simple, 
-      minZoom: 0,
-      maxZoom: 6 // Coloque aqui o mesmo zoom máximo que você usou no QGIS
-  });
+  // Cria o mapa sem o CRS.Simple, usando o padrão da web
+  const map = L.map('map').setView([0, 0], 1); // Visão inicial
 
   // Adiciona a camada de tiles que você gerou
   L.tileLayer('tiles/{z}/{x}/{y}.png', {
       attribution: 'Mapa por Alisson',
       noWrap: true,
-      tms: true // IMPORTANTE: Corrige a ordem dos tiles gerados pelo QGIS para o Leaflet
+      // A opção TMS é crucial para os tiles do QGIS
+      tms: true,
+      // Define os níveis de zoom que você gerou
+      minZoom: 0,
+      maxZoom: 6 // Coloque aqui o mesmo zoom máximo que você usou no QGIS
   }).addTo(map);
-
-  // Define uma visão inicial. Ajuste os valores se necessário.
-  map.setView([0, 0], 1);
 
 </script>
 </body>
