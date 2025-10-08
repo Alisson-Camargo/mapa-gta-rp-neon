@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <base href="/mapa-gta-rp-neon/">
   <meta charset="utf-8" />
   <title>Mapa Interativo GTA V RP - Neon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,6 +29,7 @@
   var bounds = L.latLngBounds(southWest, northEast);
 
   // Carrega a imagem única a partir da pasta "Imagem"
+  // Confirme se a extensão .png está correta!
   var imageOverlay = L.imageOverlay('Imagem/GTAV-HD-MAP-satellite.png', bounds, {
     attribution: '&copy; Mapa GTA V RP - Neon'
   }).addTo(map);
