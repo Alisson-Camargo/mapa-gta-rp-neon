@@ -28,28 +28,24 @@
 
 <script>
   // 1. CRIA O MAPA
-  // O CRS.Simple é usado para mapas que não são geográficos (como um mapa de jogo)
   const map = L.map('map', {
     crs: L.CRS.Simple,
-    minZoom: -1, // Permite mais zoom out para ver a imagem inteira
-    maxZoom: 4,  // Limite de zoom in
-    center: [4000, 4000], // Ponto central inicial
-    zoom: 0, // Zoom inicial
+    minZoom: -1,
+    maxZoom: 4,
+    center: [4000, 4000],
+    zoom: 0,
   });
 
   // 2. DEFINE OS LIMITES DA IMAGEM
-  // As coordenadas [0, 0] e [8000, 8000] definem o tamanho do "mundo" do mapa.
-  // Você pode ajustar esses valores se sua imagem tiver uma proporção muito diferente.
   const bounds = [[0, 0], [8000, 8000]];
 
   // 3. ADICIONA SUA IMAGEM AO MAPA
-  // Certifique-se que o nome do arquivo aqui é o mesmo do seu arquivo de imagem.
-  // Se sua imagem se chamar 'GTAV-HD-MAP-satellite.jpg', altere o nome abaixo.
-  const imageUrl = 'mapa.png'; // <-- COLOQUE O NOME DA SUA IMAGEM AQUI
+  // ↓↓↓↓↓↓ A CORREÇÃO ESTÁ AQUI ↓↓↓↓↓↓
+  // Alterado de 'mapa.jpg' para 'mapa.png'
+  const imageUrl = 'mapa.png';
   L.imageOverlay(imageUrl, bounds).addTo(map);
 
   // 4. AJUSTA A VISÃO DO MAPA
-  // Faz com que a imagem inteira apareça na tela ao carregar a página
   map.fitBounds(bounds);
 
 </script>
