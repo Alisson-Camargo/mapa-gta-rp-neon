@@ -27,9 +27,10 @@
 
 <script>
   // 1. CRIA O MAPA
+  // Alteramos o minZoom para -3 para permitir se afastar mais
   const map = L.map('map', {
     crs: L.CRS.Simple,
-    minZoom: -1,
+    minZoom: -3, // <-- MUDANÇA AQUI
     maxZoom: 4,
   });
 
@@ -40,9 +41,9 @@
   const imageUrl = 'mapa.png';
   L.imageOverlay(imageUrl, bounds).addTo(map);
 
-  // 4. AJUSTA A VISÃO DO MAPA (NOVA ABORDAGEM)
-  // Define o centro e o nível de zoom inicial de forma explícita
-  map.setView([4000, 4000], -1);
+  // 4. AJUSTA A VISÃO DO MAPA
+  // Definimos o zoom inicial para o novo mínimo
+  map.setView([4000, 4000], -3); // <-- MUDANÇA AQUI
 
 </script>
 
