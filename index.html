@@ -27,7 +27,6 @@
 
 <script>
   // 1. CRIA O MAPA
-  // As opções 'center' e 'zoom' foram removidas daqui
   const map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -1,
@@ -41,9 +40,9 @@
   const imageUrl = 'mapa.png';
   L.imageOverlay(imageUrl, bounds).addTo(map);
 
-  // 4. AJUSTA A VISÃO DO MAPA
-  // Agora, este comando tem controle total sobre a visão inicial
-  map.fitBounds(bounds);
+  // 4. AJUSTA A VISÃO DO MAPA (NOVA ABORDAGEM)
+  // Define o centro e o nível de zoom inicial de forma explícita
+  map.setView([4000, 4000], -1);
 
 </script>
 
