@@ -2,23 +2,15 @@
 <html lang="pt-br">
 <head>
   <meta charset="utf-8" />
-  <title>Mapa Interativo</title>
+  <title>Mapa Interativo com Tiles</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      background-color: #001;
-    }
-    #map {
-      height: 100%;
-      width: 100%;
-    }
+    html, body { height: 100%; margin: 0; padding: 0; background-color: #001; }
+    #map { height: 100%; width: 100%; }
   </style>
 </head>
 <body>
@@ -26,26 +18,24 @@
 <div id="map"></div>
 
 <script>
-  // 1. CRIA O MAPA
-  // Alteramos o minZoom para -3 para permitir se afastar mais
+  // Cria o mapa
   const map = L.map('map', {
-    crs: L.CRS.Simple,
-    minZoom: -3, // <-- MUDANÇA AQUI
-    maxZoom: 4,
+      // O CRS.Simple não é ideal para tiles XYZ, mas vamos começar assim
+      crs: L.CRS.Simple, 
+      minZoom: 0,
+      maxZoom: 6 // Coloque aqui o mesmo zoom máximo que você usou no QGIS
   });
 
-  // 2. DEFINE OS LIMITES DA IMAGEM
-  const bounds = [[0, 0], [8000, 8000]];
+  // Adiciona a camada de tiles que você gerou
+  L.tileLayer('tiles/{z}/{x}/{y}.png', {
+      attribution: 'Mapa por Alisson',
+      noWrap: true,
+      tms: true // IMPORTANTE: Corrige a ordem dos tiles gerados pelo QGIS para o Leaflet
+  }).addTo(map);
 
-  // 3. ADICIONA SUA IMAGEM AO MAPA
-  const imageUrl = 'mapa.png';
-  L.imageOverlay(imageUrl, bounds).addTo(map);
-
-  // 4. AJUSTA A VISÃO DO MAPA
-  // Definimos o zoom inicial para o novo mínimo
-  map.setView([4000, 4000], -3); // <-- MUDANÇA AQUI
+  // Define uma visão inicial. Ajuste os valores se necessário.
+  map.setView([0, 0], 1);
 
 </script>
-
 </body>
 </html>
