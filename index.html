@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <title>Mapa Interativo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <style>
+    /* Garante que o mapa ocupe toda a tela */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #001; /* Fundo escuro para combinar com o mapa */
+    }
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+  // 1. CRIA O MAPA
+  // O CRS.Simple é usado para mapas que não são geográficos (como um mapa de jogo)
+  const map = L.map('map', {
+    crs: L.CRS.Simple,
+    minZoom: -1, // Permite mais zoom out para ver a imagem inteira
+    maxZoom: 4,  // Limite de zoom in
+    center: [4000, 4000], // Ponto central inicial
+    zoom: 0, // Zoom inicial
+  });
+
+  // 2. DEFINE OS LIMITES DA IMAGEM
+  // As coordenadas [0, 0] e [8000, 8000] definem o tamanho do "mundo" do mapa.
+  // Você pode ajustar esses valores se sua imagem tiver uma proporção muito diferente.
+  const bounds = [[0, 0], [8000, 8000]];
+
+  // 3. ADICIONA SUA IMAGEM AO MAPA
+  // Certifique-se que o nome do arquivo aqui é o mesmo do seu arquivo de imagem.
+  // Se sua imagem se chamar 'GTAV-HD-MAP-satellite.jpg', altere o nome abaixo.
+  const imageUrl = 'mapa.jpg'; // <-- COLOQUE O NOME DA SUA IMAGEM AQUI
+  L.imageOverlay(imageUrl, bounds).addTo(map);
+
+  // 4. AJUSTA A VISÃO DO MAPA
+  // Faz com que a imagem inteira apareça na tela ao carregar a página
+  map.fitBounds(bounds);
+
+</script>
+
+</body>
+</html>
