@@ -14,34 +14,28 @@
 <body>
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-  // Tile URL template: tiles/{z}/{x}/{y}.png
-  var imgWidth = 2048;
-  var imgHeight = 2048;
-  var tileSize = 256;
-  var maxZ = 3;
-
-  // Compute CRS Simple bounds using pixel coordinates at max zoom
   var map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: 0,
-    maxZoom: maxZ,
-    zoomSnap: 0.5
+    maxZoom: 4,
+    zoomSnap: 0.5,
+    center: [0, 0],
+    zoom: 2
   });
 
-  // Create tile layer
+  // Ajuste o formato conforme seus arquivos (.jpg ou .png)
   var tileLayer = L.tileLayer('tiles/{z}/{x}_{y}.jpg', {
     tileSize: 256,
     noWrap: true,
-    bounds: [[0,0], [imgHeight, imgWidth]]
+    attribution: '&copy; Mapa GTA V RP - Neon'
   }).addTo(map);
 
-  // Compute image bounds in CRS.Simple coordinates
-  var southWest = map.unproject([0, imgHeight], maxZ);
-  var northEast = map.unproject([imgWidth, 0], maxZ);
-  var bounds = new L.LatLngBounds(southWest, northEast);
-
-  map.setMaxBounds(bounds);
+  // Define os limites do mapa
+  var southWest = L.latLng(-256, 0),
+      northEast = L.latLng(0, 256);
+  var bounds = L.latLngBounds(southWest, northEast);
   map.fitBounds(bounds);
 </script>
 </body>
