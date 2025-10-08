@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="utf-8" />
-  <title>Mapa Interativo com Tiles (Correção Final)</title>
+  <title>Mapa Interativo com Tiles (Versão Final)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -27,7 +27,6 @@
 
 
   // 1. CRIA UM SISTEMA DE COORDENADAS PERSONALIZADO
-  // Isso diz ao Leaflet para parar de pensar em latitude/longitude
   const customCRS = L.Util.extend({}, L.CRS.Simple, {
     transformation: new L.Transformation(1, 0, -1, IMAGE_HEIGHT)
   });
@@ -36,7 +35,7 @@
   // 2. CRIA O MAPA USANDO O NOSSO SISTEMA
   const map = L.map('map', {
     crs: customCRS,
-    minZoom: -2,
+    minZoom: 0,
     maxZoom: 6 // Coloque o zoom máximo que você gerou no QGIS
   });
 
@@ -44,18 +43,16 @@
   // 3. ADICIONA OS TILES
   L.tileLayer('tiles/{z}/{x}/{y}.png', {
       attribution: 'Mapa por Alisson',
-      tms: true, // Essencial para tiles do QGIS
+      tms: true,
       noWrap: true
   }).addTo(map);
 
 
   // 4. CENTRALIZA O MAPA CORRETAMENTE
-  // Calcula os limites exatos do mapa com base na imagem
   const southWest = map.unproject([0, IMAGE_HEIGHT], map.getMaxZoom());
   const northEast = map.unproject([IMAGE_WIDTH, 0], map.getMaxZoom());
   const bounds = new L.LatLngBounds(southWest, northEast);
 
-  // Manda o mapa se ajustar perfeitamente a esses limites
   map.fitBounds(bounds);
 
 </script>
