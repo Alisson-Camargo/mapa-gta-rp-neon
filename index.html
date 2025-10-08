@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="utf-8" />
-  <title>Mapa Interativo com Tiles</title>
+  <title>Mapa Interativo com Tiles (Correção Final)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -18,19 +18,45 @@
 <div id="map"></div>
 
 <script>
-  // Cria o mapa sem o CRS.Simple, usando o padrão da web
-  const map = L.map('map').setView([0, 0], 1); // Visão inicial
+  // ==================================================================
+  // ↓↓↓↓ COLOQUE AS DIMENSÕES DA SUA IMAGEM ORIGINAL AQUI ↓↓↓↓
+  // ==================================================================
+  const IMAGE_WIDTH = 8192;  // SUBSTITUA PELA LARGURA DA SUA IMAGEM
+  const IMAGE_HEIGHT = 8192; // SUBSTITUA PELA ALTURA DA SUA IMAGEM
+  // ==================================================================
 
-  // Adiciona a camada de tiles que você gerou
+
+  // 1. CRIA UM SISTEMA DE COORDENADAS PERSONALIZADO
+  // Isso diz ao Leaflet para parar de pensar em latitude/longitude
+  const customCRS = L.Util.extend({}, L.CRS.Simple, {
+    transformation: new L.Transformation(1, 0, -1, IMAGE_HEIGHT)
+  });
+
+
+  // 2. CRIA O MAPA USANDO O NOSSO SISTEMA
+  const map = L.map('map', {
+    crs: customCRS,
+    minZoom: -2,
+    maxZoom: 6 // Coloque o zoom máximo que você gerou no QGIS
+  });
+
+
+  // 3. ADICIONA OS TILES
   L.tileLayer('tiles/{z}/{x}/{y}.png', {
       attribution: 'Mapa por Alisson',
-      noWrap: true,
-      // A opção TMS é crucial para os tiles do QGIS
-      tms: true,
-      // Define os níveis de zoom que você gerou
-      minZoom: 0,
-      maxZoom: 6 // Coloque aqui o mesmo zoom máximo que você usou no QGIS
+      tms: true, // Essencial para tiles do QGIS
+      noWrap: true
   }).addTo(map);
+
+
+  // 4. CENTRALIZA O MAPA CORRETAMENTE
+  // Calcula os limites exatos do mapa com base na imagem
+  const southWest = map.unproject([0, IMAGE_HEIGHT], map.getMaxZoom());
+  const northEast = map.unproject([IMAGE_WIDTH, 0], map.getMaxZoom());
+  const bounds = new L.LatLngBounds(southWest, northEast);
+
+  // Manda o mapa se ajustar perfeitamente a esses limites
+  map.fitBounds(bounds);
 
 </script>
 </body>
