@@ -9,12 +9,11 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
   <style>
-    /* Garante que o mapa ocupe toda a tela */
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-      background-color: #001; /* Fundo escuro para combinar com o mapa */
+      background-color: #001;
     }
     #map {
       height: 100%;
@@ -28,24 +27,22 @@
 
 <script>
   // 1. CRIA O MAPA
+  // As opções 'center' e 'zoom' foram removidas daqui
   const map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -1,
     maxZoom: 4,
-    center: [4000, 4000],
-    zoom: 0,
   });
 
   // 2. DEFINE OS LIMITES DA IMAGEM
   const bounds = [[0, 0], [8000, 8000]];
 
   // 3. ADICIONA SUA IMAGEM AO MAPA
-  // ↓↓↓↓↓↓ A CORREÇÃO ESTÁ AQUI ↓↓↓↓↓↓
-  // Alterado de 'mapa.jpg' para 'mapa.png'
   const imageUrl = 'mapa.png';
   L.imageOverlay(imageUrl, bounds).addTo(map);
 
   // 4. AJUSTA A VISÃO DO MAPA
+  // Agora, este comando tem controle total sobre a visão inicial
   map.fitBounds(bounds);
 
 </script>
